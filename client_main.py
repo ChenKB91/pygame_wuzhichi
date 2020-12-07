@@ -16,7 +16,7 @@ class Client():
         Client.check_if_valid_on_user_board(player_move)  # loop
         return Gaming_UI.check_mouse_click()
 
-    def recieve_board(self):  # 15
+    def recieve_board(self):  # 15 (Use module pickle--binary)
         """ Update self.board """
         pass
 
@@ -28,7 +28,8 @@ class Client():
         self.client_socket.send(player_move)
 
     def recieve_game_status(self):  #15
-        """ Return a boolean stands for is game end """
+        """ Return a list stands for is game end ("Playing" or "
+        End_Game")"""
         return self.client_socket.recv()
 
 
@@ -39,5 +40,5 @@ while True:
     Gaming_UI.draw_board(Client.board)
     player_move = Client.player_make_move()
     Client.send_move_to_server(player_move)
-    if Client.recieve_game_status() == "End_Game":
+    if Client.recieve_game_status():
         break
