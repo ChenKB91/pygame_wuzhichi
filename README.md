@@ -1,3 +1,5 @@
 # pygame_wuzhichi
 
-idk just a little project
+This project make a online multi-player wu-zhi-chi (go-bang) with pygame and socket.
+
+## TODO List
