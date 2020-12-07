@@ -1,4 +1,5 @@
 import pickle
+from GameObjects import User
 class Server():
     def __init__(self):
         self.board = None
@@ -17,13 +18,22 @@ class Server():
             l_s.bind((self.host, self.port))
             l_s.listen()
             c_s, addr = l_s.accept()
+            user_list.append(User(c_s, addr))
+            print("1 Connected", addr)
+
+            l_s.listen()
+            c_s, addr = l_s.accept()
+            user_list.append(User(c_s, addr))
+            print("2 Connected", addr)
+
+            """
             with c_s:
                 print("Connected", addr)
                 while True:
                     data = c_s.recv(1024)
                     if not data:
                         break
-                    c_s.sendall(data)
+                    c_s.sendall(data)"""
         # 待修改結束
 
         pass
