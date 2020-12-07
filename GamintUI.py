@@ -5,7 +5,7 @@ class GamingUI():
         surface = None  # pygame.surface
 
     def draw_board(self, board):  # 100
-   		# 
+   		# [[EMPTY]*n]*n
         # draw_grid
         # draw zhi
         for i in range(15):
