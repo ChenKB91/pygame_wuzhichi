@@ -1,5 +1,7 @@
 # pygame_wuzhichi
 
-This project make a online multi-player wu-zhi-chi (go-bang) with pygame and socket.
+This project make an online multiplayer wu-zhi-chi (go-bang) game with pygame and socket.
+
+Team: NTU CSIE game dev
 
 ## TODO List
