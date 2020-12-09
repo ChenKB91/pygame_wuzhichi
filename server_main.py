@@ -8,8 +8,8 @@ class Server():
     def __init__(self):
         self.board = Board()
         #self.socket = None
-        self.game_status = None
-        self.user_list = None
+        self.game_status = "Playing" # temporary
+        self.user_list = []
         self.host = "127.0.0.1"
         self.port = 65432
 
@@ -29,17 +29,6 @@ class Server():
             c_s, addr = l_s.accept()
             self.user_list.append(User(c_s, addr))
             print("2 Connected", addr)
-
-            """
-            with c_s:
-                print("Connected", addr)
-                while True:
-                    data = c_s.recv(1024)
-                    if not data:
-                        break
-                    c_s.sendall(data)"""
-        # 待修改結束
-
         pass
 
     def send_board_to_client(self):  # 15
@@ -92,6 +81,7 @@ class Server():
         return
 
     def send_game_status(self):
+        # sends game status to both clients
         for user in self.user_list:
             user.socket.send(self.game_status)
 
