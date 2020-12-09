@@ -1,6 +1,6 @@
 import pickle
 import socket
-from GameObjects import User, Board
+from game_objects import User, Board
 
 BUFSIZE = 32768
 
@@ -29,7 +29,6 @@ class Server():
             c_s, addr = l_s.accept()
             self.user_list.append(User(c_s, addr))
             print("2 Connected", addr)
-        pass
 
     def send_board_to_client(self):  # 15
         # sends board to both clients
@@ -85,14 +84,16 @@ class Server():
         for user in self.user_list:
             user.socket.send(self.game_status)
 
-server = Server()
-server.receieve_user_connection()
-while not server.ended:
-    for user in server.user_list:
-        server.send_board_to_client()
-        move = server.recieve_move_from_client(user)
-        server.make_move(move)
-        server.check_if_the_game_end(move)
-        server.send_game_status()
-        if server.game_status == "End_Game":
-            break
+
+if __name__ = '__main__':
+    server = Server()
+    server.receieve_user_connection()
+    while not server.ended:
+        for user in server.user_list:
+            server.send_board_to_client()
+            move = server.recieve_move_from_client(user)
+            server.make_move(move)
+            server.check_if_the_game_end(move)
+            server.send_game_status()
+            if server.game_status == "End_Game":
+                break
