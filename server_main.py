@@ -1,9 +1,13 @@
 import pickle
-from GameObjects import User
+import socket
+from GameObjects import User, Board
+
+BUFSIZE = 32768
+
 class Server():
     def __init__(self):
-        self.board = None
-        self.socket = None
+        self.board = Board()
+        #self.socket = None
         self.game_status = None
         self.user_list = None
         self.host = "127.0.0.1"
@@ -18,12 +22,12 @@ class Server():
             l_s.bind((self.host, self.port))
             l_s.listen()
             c_s, addr = l_s.accept()
-            user_list.append(User(c_s, addr))
+            self.user_list.append(User(c_s, addr))
             print("1 Connected", addr)
 
             l_s.listen()
             c_s, addr = l_s.accept()
-            user_list.append(User(c_s, addr))
+            self.user_list.append(User(c_s, addr))
             print("2 Connected", addr)
 
             """
@@ -38,19 +42,20 @@ class Server():
 
         pass
 
-    def send_board_to_client(self, user_list):  # 15
-        # 也要改成多個clinet的方法
-        self.socket.send(pickle.dumps(self.board))
+    def send_board_to_client(self):  # 15
+        # sends board to both clients
+        for user in self.user_list:
+            user.socket.sendall(pickle.dumps(self.board))
 
     def recieve_move_from_client(self, user):  # 15
-        # 對指定ip的user接收move的方法？
-        return pickle.loads(self.socket.recv(user.ip))
+        # receives baord from the specified user
+        return pickle.loads(user.socket.recv(BUFSIZE))
 
     def make_move(self, move):
         self.board.update(move)
 
     def check_if_the_game_end(self, move):  # looooongic
-        """ Check if there's 5 connected chesses, 
+        """ Check if there's 5 connected pieces, 
             and update game status """
         move_color = move.get_value()[0]
         pi = (move.get_value()[1:])  # initial point(x, y)
@@ -84,18 +89,20 @@ class Server():
             if chess_count[direct] + chess_count[direct+4] >= 4:
                 self.game_status = "End_Game"
                 return
+        return
 
-    def send_game_status(self, users):
-        for user in users:
-            self.socket.send(self.game_status)
+    def send_game_status(self):
+        for user in self.user_list:
+            user.socket.send(self.game_status)
 
-Server.receieve_user_connection()
-while not Server.ended:
-    for user in user_list:
-        Server.send_board_to_client(user_list)
-        move = Server.recieve_move_from_client(user)
-        Server.make_move(move)
-        Server.check_if_the_game_end(move)
-        Server.send_game_status(user_list)
-        if Server.game_status == "End_Game":
+server = Server()
+server.receieve_user_connection()
+while not server.ended:
+    for user in server.user_list:
+        server.send_board_to_client()
+        move = server.recieve_move_from_client(user)
+        server.make_move(move)
+        server.check_if_the_game_end(move)
+        server.send_game_status()
+        if server.game_status == "End_Game":
             break
