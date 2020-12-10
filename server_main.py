@@ -10,13 +10,14 @@ class Server():
         #self.socket = None
         self.game_status = "Playing" # temporary
         self.user_list = []
-        self.host = "127.0.0.1"
-        self.port = 65432
+        self.host = "140.112.30.35"
+        self.port = 62345
 
     def recieve_user_connection(self):  # 20
         """ bind, accept, listen, ...
             And update user_list"""
-        
+        self.host = socket.gethostname()
+        print("Host: ", self.host)
         # 這是ptt的sample code，但要處理2個clients好像要別的方法，待修改（已修改完成）
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as l_s:
             l_s.bind((self.host, self.port))
@@ -29,6 +30,7 @@ class Server():
             c_s, addr = l_s.accept()
             self.user_list.append(User(c_s, addr))
             print("2 Connected", addr)
+
 
     def send_board_to_client(self):  # 15
         # sends board to both clients
