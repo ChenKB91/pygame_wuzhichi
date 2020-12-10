@@ -1,5 +1,6 @@
 import socket
 import pickle
+import pygame
 
 from game_objects import Board
 
@@ -96,6 +97,9 @@ if __name__ == '__main__':
     input_server_port = int(input('Enter Server Port(enter empty for using default port 62345): '))
     server_port = SERVER_DEFAULT_PORT if input_server_port == '' else input_server_port
     player = Client(server_port)
+
+    pygame.display.set_caption('Dinosaur Game')
+    screen = pygame.display.set_mode((800, 800))
     
     if player.connect_client_to_server():
         # Gaming_UI.draw_start_screen()
