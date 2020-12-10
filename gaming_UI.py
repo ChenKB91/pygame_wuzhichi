@@ -1,29 +1,45 @@
 import pygame
 
 class GamingUI():
-    def __init__(self):
+    def __init__(self, s):
 
-        pygame.init()
-        surface = pygame.display.set_mode((800, 600))
+        # pygame.init()
+        self.surface = pygame.display.set_mode((800, 800))
         pygame.display.set_caption('五子棋')
         Raw_BoardImg = pygame.image.load('./images/board_img.png')
-        BW_img = pygame.image.load('./images/BW.png')
-        croppedBW = pygame.Surface((70, 70))
-        boardImg = pygame.transform.scale(Raw_BoardImg, (600, 600))
-        window_surface.blit(boardImg, (0,0))
+        self.B_img = pygame.image.load('./images/black.png')
+        self.B_img = pygame.image.scale(self.B_img, (40,40))        
+        self.W_img = pygame.image.load('./images/white.png')
+        self.W_img = pygame.image.load('./images/white.png')
+        
+        self.boardImg = pygame.transform.scale(Raw_BoardImg, (600, 600))
+        self.surface.blit(boardImg, (0,0))
 
+        self.board_origin = (100,100)
+
+<<<<<<< Updated upstream
     def draw_board(self, board , ):  # 100
+=======
+    def draw_board(self, board):  # 100
+>>>>>>> Stashed changes
         # [[EMPTY]*n]*n
         # draw_grid
         # draw zhi
-        
+        self.surface.blit(boardImg, self.board_origin)        
         for i in range(15):
             for j in range(15):
                 if board[i][j] == 1:
+<<<<<<< Updated upstream
                     surface.blit(BW_img, (40*i, 40*j), (0, 70, 70, 70))
                 elif board[i][j] == -1:
                     surface.blit(BW_img, (40*i, 40*j), (0, 0, 70, 70))
 
+=======
+                    self.surface.blit(B_img, (180+40*i, 180+40*j))
+                elif board[i][j] == -1:
+                    self.surface.blit(W_img, (180+40*i, 180+40*j))
+        pygame.display.update()
+>>>>>>> Stashed changes
 
     def check_mouse_click(self):  # 100
         player_move = Move(mouse_coordinate)
