@@ -4,16 +4,18 @@ import pickle
 from game_objects import Board
 
 SERVER_IP = "127.0.0.1"
-SERVER_PORT = 65432
+SERVER_DEFAULT_PORT = 62345
 BUFSIZE = 32768
 
 class Client():
-    def __init__(self):
+    def __init__(self, server_port):
         self.board = None
         # TODO need gaming UI to receive move from user
         self.gaming_interface = None
         self.socket = None
+        self.server_port = server_port
 
+    
     def connect_client_to_server(self):  # 20
         """ connect client to server 
         """
@@ -25,7 +27,7 @@ class Client():
             return False
         
         try:
-            self.socket.connect((SERVER_IP, SERVER_PORT))
+            self.socket.connect((SERVER_IP, self.server_port))
             print("Connected")
         except:
             print("Connection error")
@@ -84,7 +86,10 @@ class Client():
 
 
 if __name__ == '__main__':
-    player = Client()
+    input_server_port = int(input('Enter Server Port(enter empty for using default port 62345): '))
+    server_port = SERVER_DEFAULT_PORT if input_server_port == '' else input_server_port
+    player = Client(server_port)
+    
     if player.connect_client_to_server():
         # Gaming_UI.draw_start_screen()
         while True:
