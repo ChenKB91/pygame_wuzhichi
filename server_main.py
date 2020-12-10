@@ -13,7 +13,7 @@ class Server():
         self.host = "140.112.30.35"
         self.port = 62345
 
-    def recieve_user_connection(self):  # 20
+    def receive_user_connection(self):  # 20
         """ bind, accept, listen, ...
             And update user_list"""
         self.host = socket.gethostname()
@@ -88,9 +88,9 @@ class Server():
             user.socket.send(self.game_status)
 
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     server = Server()
-    server.receieve_user_connection()
+    server.receive_user_connection()
     while not server.ended:
         for user in server.user_list:
             server.send_board_to_client()
