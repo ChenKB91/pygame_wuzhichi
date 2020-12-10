@@ -46,13 +46,6 @@ class Client():
                 # update board
                 return move
 
-
-    def receive_board(self):  # 15 (Use "module pickle"--binary)
-        """ Update self.board """
-        pass
-
-    def receive_board(self):  # 15
-
     def receive_board(self):  # 15 (Use "module pickle"--binary)
 
         """ receive the new board from the server and update
