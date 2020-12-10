@@ -10,8 +10,8 @@ class Server():
         #self.socket = None
         self.game_status = "Playing" # temporary
         self.user_list = []
-        self.host = "127.0.0.1"
-        self.port = 65432
+        self.host = "140.112.30.35"
+        self.port = 62345
 
     def recieve_user_connection(self):  # 20
         """ bind, accept, listen, ...
