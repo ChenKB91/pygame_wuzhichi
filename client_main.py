@@ -110,3 +110,6 @@ if __name__ == '__main__':
             player.send_move_to_server(player_move)
             if player.receive_game_status() == "End_Game":
                 break
+
+# on_event()
+# detect what happened using Pygame
