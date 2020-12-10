@@ -17,29 +17,17 @@ class GamingUI():
 
         self.board_origin = (100,100)
 
-<<<<<<< Updated upstream
-    def draw_board(self, board , ):  # 100
-=======
+
     def draw_board(self, board):  # 100
->>>>>>> Stashed changes
-        # [[EMPTY]*n]*n
-        # draw_grid
-        # draw zhi
         self.surface.blit(boardImg, self.board_origin)        
         for i in range(15):
             for j in range(15):
                 if board[i][j] == 1:
-<<<<<<< Updated upstream
-                    surface.blit(BW_img, (40*i, 40*j), (0, 70, 70, 70))
-                elif board[i][j] == -1:
-                    surface.blit(BW_img, (40*i, 40*j), (0, 0, 70, 70))
-
-=======
                     self.surface.blit(B_img, (180+40*i, 180+40*j))
                 elif board[i][j] == -1:
                     self.surface.blit(W_img, (180+40*i, 180+40*j))
         pygame.display.update()
->>>>>>> Stashed changes
+
 
     def check_mouse_click(self):  # 100
         player_move = Move(mouse_coordinate)
