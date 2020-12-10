@@ -45,6 +45,11 @@ class Client():
                 return move
 
 
+<<<<<<< HEAD
+    def recieve_board(self):  # 15 (Use module pickle--binary)
+        """ Update self.board """
+        pass
+=======
     def recieve_board(self):  # 15
         """ receive the new board from the server and update
         """
@@ -57,6 +62,7 @@ class Client():
         
         return
 
+>>>>>>> a5a94efbb3edd34fcfc7b306899e91c81cbaf664
 
     def check_if_valid_on_user_board(self, player_move):  # 15
         """ check if the move valid
@@ -72,6 +78,22 @@ class Client():
 
 
     def recieve_game_status(self):  #15
+<<<<<<< HEAD
+        """ Return a list stands for is game end ("Playing" or "
+        End_Game")"""
+        return self.client_socket.recv()
+
+
+Client.connect_client_to_server()
+# Gaming_UI.draw_start_screen()
+while True:
+    Client.recieve_board()
+    Gaming_UI.draw_board(Client.board)
+    player_move = Client.player_make_move()
+    Client.send_move_to_server(player_move)
+    if Client.recieve_game_status():
+        break
+=======
         """ receive the game status from the server
         """
         try:
@@ -94,3 +116,4 @@ if __name__ == '__main__':
             player.send_move_to_server(player_move)
             if player.recieve_game_status() == "End_Game":
                 break
+>>>>>>> a5a94efbb3edd34fcfc7b306899e91c81cbaf664
