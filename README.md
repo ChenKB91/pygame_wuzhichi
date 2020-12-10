@@ -6,8 +6,9 @@ Team: NTU CSIE game dev
 
 ## Structure
 
-clinent_main.py: integrate socket connect stuff and UI
-gaming_UI.py: make a screen, and handle rendering
+- clinent_main.py: integrate socket connect stuff and UI
+
+- gaming_UI.py: make a screen, and handle rendering
 
 
 ## TODO List
