@@ -47,13 +47,20 @@ class Client():
                 return move
 
 
-    def recieve_board(self):  # 15 (Use "module pickle"--binary)
+    def receive_board(self):  # 15 (Use "module pickle"--binary)
+        """ Update self.board """
+        pass
+
+    def receive_board(self):  # 15
+
+    def receive_board(self):  # 15 (Use "module pickle"--binary)
+
         """ receive the new board from the server and update
         """
         try:
             received_board = pickle.loads(self.socket.recv(BUFSIZE))
             self.board = received_board
-            print("recieve the new board from server.")
+            print("receive the new board from server.")
         except:
             print("something goes wrong when receiving board from the server.")
         
@@ -73,12 +80,32 @@ class Client():
         return
 
 
-    def recieve_game_status(self):  #15
+
+    def receive_game_status(self):  #15
+
+        """ Return a list stands for is game end ("Playing" or "
+        End_Game")"""
+        return self.client_socket.recv()
+
+
+Client.connect_client_to_server()
+# Gaming_UI.draw_start_screen()
+while True:
+    Client.receive_board()
+    Gaming_UI.draw_board(Client.board)
+    player_move = Client.player_make_move()
+    Client.send_move_to_server(player_move)
+    if Client.receive_game_status():
+        break
+
+
+    def receive_game_status(self):  #15
+
         """ receive the game status from the server
         """
         try:
             received_game_status = pickle.loads(self.socket.recv(BUFSIZE))
-            print("recieve the new game status from server.")
+            print("receive the new game status from server.")
         except:
             print("something goes wrong when receiving game status from the server.")
 
@@ -93,9 +120,9 @@ if __name__ == '__main__':
     if player.connect_client_to_server():
         # Gaming_UI.draw_start_screen()
         while True:
-            player.recieve_board()
+            player.receive_board()
             # Gaming_UI.draw_board(player.board)
             player_move = player.player_make_move()
             player.send_move_to_server(player_move)
-            if player.recieve_game_status() == "End_Game":
+            if player.receive_game_status() == "End_Game":
                 break
