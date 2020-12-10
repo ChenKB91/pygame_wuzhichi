@@ -3,7 +3,7 @@ import pickle
 
 from game_objects import Board
 
-SERVER_IP = "127.0.0.1"
+SERVER_IP = "140.112.30.35"
 SERVER_DEFAULT_PORT = 62345
 BUFSIZE = 32768
 
