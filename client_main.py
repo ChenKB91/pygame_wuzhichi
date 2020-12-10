@@ -1,33 +1,84 @@
-import Gaming_UI
+import socket
+import pickle
+
+from game_objects import Board
+
+SERVER_IP = "127.0.0.1"
+SERVER_PORT = 65432
+BUFSIZE = 32768
 
 class Client():
-    board = None;
-    client_socket = socket()
     def __init__(self):
-        # self.board = None
-        pass
+        self.board = None
+        # TODO need gaming UI to receive move from user
+        self.gaming_interface = None
+        self.socket = None
 
     def connect_client_to_server(self):  # 20
-        """ bind, accept, listen?, ... """
-        pass
+        """ connect client to server 
+        """
+        try:  
+            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
+            print ("Socket successfully created") 
+        except socket.error as err:  
+            print ("Socket creation failed with error %s" %(err))
+            return False
+        
+        try:
+            self.socket.connect((SERVER_IP, SERVER_PORT))
+            print("Connected")
+        except:
+            print("Connection error")
+            return False
+        
+        return True
+
 
     def player_make_move(self):
-        """ Detect coordinate, process it ,and return player's move """
-        Client.check_if_valid_on_user_board(player_move)  # loop
-        return Gaming_UI.check_mouse_click()
+        """ waiting for user input until getting a valid input and update the client board
+        """
 
+        while True:
+            move = self.gaming_interface.make_move()
+            if self.check_if_valid_on_user_board(move):
+                # update board
+                return move
+
+
+<<<<<<< HEAD
     def recieve_board(self):  # 15 (Use module pickle--binary)
         """ Update self.board """
         pass
+=======
+    def recieve_board(self):  # 15
+        """ receive the new board from the server and update
+        """
+        try:
+            received_board = pickle.loads(self.socket.recv(BUFSIZE))
+            self.board = received_board
+            print("recieve the new board from server.")
+        except:
+            print("something goes wrong when receiving board from the server.")
+        
+        return
+
+>>>>>>> a5a94efbb3edd34fcfc7b306899e91c81cbaf664
 
     def check_if_valid_on_user_board(self, player_move):  # 15
-        """ check if there's been chess on that location """
-        return bool
+        """ check if the move valid
+        """
+        return self.board.check_valid(player_move)
+
 
     def send_move_to_server(self, player_move):  # 15
-        self.client_socket.send(player_move)
+        """ send the move to the server
+        """
+        self.socket.send(pickle.dumps(player_move))
+        return
+
 
     def recieve_game_status(self):  #15
+<<<<<<< HEAD
         """ Return a list stands for is game end ("Playing" or "
         End_Game")"""
         return self.client_socket.recv()
@@ -42,3 +93,27 @@ while True:
     Client.send_move_to_server(player_move)
     if Client.recieve_game_status():
         break
+=======
+        """ receive the game status from the server
+        """
+        try:
+            received_game_status = pickle.loads(self.socket.recv(BUFSIZE))
+            print("recieve the new game status from server.")
+        except:
+            print("something goes wrong when receiving game status from the server.")
+
+        return received_game_status
+
+
+if __name__ == '__main__':
+    player = Client()
+    if player.connect_client_to_server():
+        # Gaming_UI.draw_start_screen()
+        while True:
+            player.recieve_board()
+            # Gaming_UI.draw_board(player.board)
+            player_move = player.player_make_move()
+            player.send_move_to_server(player_move)
+            if player.recieve_game_status() == "End_Game":
+                break
+>>>>>>> a5a94efbb3edd34fcfc7b306899e91c81cbaf664
