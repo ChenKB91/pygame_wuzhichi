@@ -20,6 +20,7 @@ class Server():
         print("Host: ", self.host)
         # 這是ptt的sample code，但要處理2個clients好像要別的方法，待修改（已修改完成）
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as l_s:
+            l_s.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
             l_s.bind((self.host, self.port))
             l_s.listen()
             c_s, addr = l_s.accept()
