@@ -12,7 +12,7 @@ class GamingUI():
         boardImg = pygame.transform.scale(Raw_BoardImg, (600, 600))
         window_surface.blit(boardImg, (0,0))
 
-    def draw_board(self, board,surface):  # 100
+    def draw_board(self, board , ):  # 100
         # [[EMPTY]*n]*n
         # draw_grid
         # draw zhi
@@ -20,11 +20,14 @@ class GamingUI():
         for i in range(15):
             for j in range(15):
                 if board[i][j] == 1:
-                    croppedBW.blit(BW_img, (40*i, 40*j), (0, 70, 70, 70))
+                    surface.blit(BW_img, (40*i, 40*j), (0, 70, 70, 70))
                 elif board[i][j] == -1:
-                    croppedBW.blit(BW_img, (40*i, 40*j), (0, 0, 70, 70))
+                    surface.blit(BW_img, (40*i, 40*j), (0, 0, 70, 70))
 
 
     def check_mouse_click(self):  # 100
         player_move = Move(mouse_coordinate)
 
+if __name__ == '__main__':
+    game1=GamingUI()
+    game1.draw_board
