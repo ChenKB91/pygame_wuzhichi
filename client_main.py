@@ -3,7 +3,7 @@ import pickle
 
 from game_objects import Board
 
-SERVER_IP = "127.0.0.1"
+SERVER_IP = "140.112.30.35"
 SERVER_DEFAULT_PORT = 62345
 BUFSIZE = 32768
 
@@ -15,7 +15,7 @@ class Client():
         self.socket = None
         self.server_port = server_port
 
-    
+
     def connect_client_to_server(self):  # 20
         """ connect client to server 
         """
@@ -48,12 +48,6 @@ class Client():
 
 
     def receive_board(self):  # 15 (Use "module pickle"--binary)
-        """ Update self.board """
-        pass
-
-    def receive_board(self):  # 15
-
-    def receive_board(self):  # 15 (Use "module pickle"--binary)
 
         """ receive the new board from the server and update
         """
@@ -80,27 +74,13 @@ class Client():
         return
 
 
-
     def receive_game_status(self):  #15
-
         """ Return a list stands for is game end ("Playing" or "
         End_Game")"""
         return self.client_socket.recv()
 
 
-Client.connect_client_to_server()
-# Gaming_UI.draw_start_screen()
-while True:
-    Client.receive_board()
-    Gaming_UI.draw_board(Client.board)
-    player_move = Client.player_make_move()
-    Client.send_move_to_server(player_move)
-    if Client.receive_game_status():
-        break
-
-
     def receive_game_status(self):  #15
-
         """ receive the game status from the server
         """
         try:
