@@ -47,7 +47,7 @@ class Client():
     def player_make_move(self, x, y):
         """ waiting for user input until getting a valid input and update the client board
         """
-        move = Move(self.color, x, y)
+        move = Move(self.color, (x, y))
         if self.check_if_valid_on_user_board(move):
             # update board
             return move
@@ -59,12 +59,12 @@ class Client():
 
         """ receive the new board from the server and update
         """
-        try:
-            received_board = pickle.loads(self.socket.recv(BUFSIZE))
-            self.board = received_board
-            print("receive the new board from server.")
-        except:
-            print("something goes wrong when receiving board from the server.")
+        #try:
+        received_board = pickle.loads(self.socket.recv(BUFSIZE))
+        self.board = received_board
+        print("receive the new board from server.")
+        #except:
+        #    print("something goes wrong when receiving board from the server.")
         
         return
 
@@ -116,19 +116,26 @@ if __name__ == '__main__':
     
     if player.connect_client_to_server():      
         while True:
+            print(1)
             player.receive_board()
+            print(2)
             player.ui.draw_board(player.board)     
             for event in pygame.event.get():
+                print(event)
                 if event.type == QUIT:
                     pygame.quit()
 
                 if event.type == pygame.MOUSEBUTTONUP:
+                    print(3)
                     pos = pygame.mouse.get_pos()
+                    print(4)
                     x, y = player.ui.mouse_click(pos)
+                    print(5)
                     player_move = player.player_make_move(x, y)
                     if player_move:
+                        print(6)
                         player.send_move_to_server(player_move)
-                    
-            if player.receive_game_status() == "End_Game":
-                break
+            print(7)
+            """if player.receive_game_status() == "End_Game":
+                break"""
 
