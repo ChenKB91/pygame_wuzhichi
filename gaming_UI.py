@@ -38,7 +38,7 @@ class GamingUI():
         if y < 0: y = 0
         elif y > 15: y=15
 
-        return x,y
+        return x, y
 
 
 if __name__ == '__main__':
