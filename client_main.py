@@ -99,8 +99,8 @@ class Client():
 
 
 if __name__ == '__main__':
-    input_server_port = int(input('Enter Server Port(enter empty for using default port 62345): '))
-    server_port = SERVER_DEFAULT_PORT if input_server_port == '' else input_server_port
+    input_server_port = input('Enter Server Port(enter empty for using default port 62345): ')
+    server_port = SERVER_DEFAULT_PORT if input_server_port == '' else int(input_server_port)
     player = Client(server_port)
 
     pygame.init()
