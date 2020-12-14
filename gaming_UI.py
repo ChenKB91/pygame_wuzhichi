@@ -13,7 +13,7 @@ class GamingUI():
         self.W_img = pygame.transform.scale(self.W_img, (40,40))        
 
         self.boardImg = pygame.transform.scale(Raw_BoardImg, (600, 600))
-        self.surface.blit(boardImg, (0,0))
+        self.surface.blit(self.boardImg, (0,0))
 
         self.board_origin = (100,100)
 
