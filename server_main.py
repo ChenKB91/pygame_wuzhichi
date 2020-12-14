@@ -42,7 +42,9 @@ class Server():
 
     def recieve_move_from_client(self, user):  # 15
         # receives baord from the specified user
-        return pickle.loads(user.socket.recv(BUFSIZE))
+        data = user.socket.recv(BUFSIZE)
+        while data == None: data = user.socket.recv(BUFSIZE)
+        return pickle.loads(data)
 
     def make_move(self, move):
         self.board.update(move)
