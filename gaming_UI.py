@@ -1,7 +1,7 @@
 import pygame
 
 class GamingUI():
-    def __init__(self, s):
+    def __init__(self):
 
         # pygame.init()
         self.surface = pygame.display.set_mode((800, 800))
@@ -33,5 +33,5 @@ class GamingUI():
         player_move = Move(mouse_coordinate)
 
 if __name__ == '__main__':
-    game1=GamingUI()
-    game1.draw_board
+    game1 = GamingUI()
+    game1.draw_board()

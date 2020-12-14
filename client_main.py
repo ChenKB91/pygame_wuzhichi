@@ -1,8 +1,10 @@
 import socket
 import pickle
 import pygame
+from pygame.locals import QUIT
 
 from game_objects import Board
+from gaming_UI import GamingUI
 
 SERVER_IP = "140.112.30.35"
 SERVER_DEFAULT_PORT = 62345
@@ -12,7 +14,7 @@ class Client():
     def __init__(self, server_port):
         self.board = None
         # TODO need gaming UI to receive move from user
-        self.gaming_interface = None
+        self.ui = GamingUI()
         self.socket = None
         self.server_port = server_port
 
@@ -98,14 +100,18 @@ if __name__ == '__main__':
     server_port = SERVER_DEFAULT_PORT if input_server_port == '' else input_server_port
     player = Client(server_port)
 
+    pygame.init()
     pygame.display.set_caption('Dinosaur Game')
     screen = pygame.display.set_mode((800, 800))
     
     if player.connect_client_to_server():
-        # Gaming_UI.draw_start_screen()
+        player.receive_board()
+        player.ui.draw_board()       
         while True:
-            player.receive_board()
-            # Gaming_UI.draw_board(player.board)
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    pygame.quit()
+                # TODO: add other event (check mouse click)
             player_move = player.player_make_move()
             player.send_move_to_server(player_move)
             if player.receive_game_status() == "End_Game":
