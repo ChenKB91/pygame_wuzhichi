@@ -22,15 +22,24 @@ class GamingUI():
         self.surface.blit(boardImg, self.board_origin)        
         for i in range(15):
             for j in range(15):
-                if board[i][j] == 1:
+                if board.get_board()[i][j] == 1:
                     self.surface.blit(B_img, (180+40*i, 180+40*j))
-                elif board[i][j] == -1:
+                elif board.get_board()[i][j] == -1:
                     self.surface.blit(W_img, (180+40*i, 180+40*j))
         pygame.display.update()
 
 
-    def check_mouse_click(self):  # 100
-        player_move = Move(mouse_coordinate)
+    def mouse_click(self, coordinate):  # 100
+        # converts pixel coordinate to board coordinate.
+        x = int(round((coordinate[0]-100)/40))
+        y = int(round((coordinate[1]-100)/40))
+        if x < 0: x = 0
+        elif x > 15: x=15
+        if y < 0: y = 0
+        elif y > 15: y=15
+
+        return x,y
+
 
 if __name__ == '__main__':
     game1=GamingUI()
