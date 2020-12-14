@@ -91,7 +91,7 @@ class Server():
 if __name__ == '__main__':
     server = Server()
     server.receive_user_connection()
-    while not server.ended:
+    while True:
         for user in server.user_list:
             server.send_board_to_client()
             move = server.recieve_move_from_client(user)
