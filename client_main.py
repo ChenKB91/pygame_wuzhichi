@@ -32,14 +32,14 @@ class Client():
             print ("Socket creation failed with error %s" %(err))
             return False
         
-        try:
-            self.socket.connect((self.server_ip, self.server_port))
-            color = pickle.loads(self.socket.recv(BUFSIZE))
-            self.color = color
-            print("Connected")
-        except:
+        #try:
+        self.socket.connect((self.server_ip, self.server_port))
+        color = pickle.loads(self.socket.recv(BUFSIZE))
+        self.color = color
+        print("Connected")
+        """except:
             print("Connection error")
-            return False
+            return False"""
         
         return True
 
@@ -104,7 +104,7 @@ if __name__ == '__main__':
     input_server_port = input('Enter Server Port(just press enter for using default port 62345): ')
     input_server_ip = input('Enter 1 for remote server(140.112.30.35) / 0 for localhost(127.0.0.1): ')
     server_port = SERVER_DEFAULT_PORT if input_server_port == '' else int(input_server_port)
-    server_ip = SERVER_IP if input_server_ip == 1 else LOCALLOST_IP
+    server_ip = SERVER_IP if input_server_ip == "1" else LOCALLOST_IP
     player = Client(server_port, server_ip)
 
     pygame.init()
