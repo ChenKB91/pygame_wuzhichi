@@ -111,6 +111,8 @@ if __name__ == '__main__':
         player.receive_board()
         player.ui.draw_board()       
         while True:
+            player.receive_board()
+            player.ui.draw_board(player.board)     
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
