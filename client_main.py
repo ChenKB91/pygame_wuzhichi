@@ -32,14 +32,14 @@ class Client():
             print ("Socket creation failed with error %s" %(err))
             return False
         
-        #try:
-        self.socket.connect((self.server_ip, self.server_port))
-        color = pickle.loads(self.socket.recv(BUFSIZE))
-        self.color = color
-        print("Connected")
-        """except:
+        try:
+            self.socket.connect((self.server_ip, self.server_port))
+            color = pickle.loads(self.socket.recv(BUFSIZE))
+            self.color = color
+            print("Connected")
+        except:
             print("Connection error")
-            return False"""
+            return False
         
         return True
 
@@ -59,12 +59,12 @@ class Client():
 
         """ receive the new board from the server and update
         """
-        #try:
-        received_board = pickle.loads(self.socket.recv(BUFSIZE))
-        self.board = received_board
-        print("receive the new board from server.")
-        #except:
-        #    print("something goes wrong when receiving board from the server.")
+        try:
+            received_board = pickle.loads(self.socket.recv(BUFSIZE))
+            self.board = received_board
+            print("receive the new board from server.")
+        except:
+            print("something goes wrong when receiving board from the server.")
         
         return
 
@@ -81,11 +81,12 @@ class Client():
         self.socket.send(pickle.dumps(player_move))
         return
 
-
+    '''
     def receive_game_status(self):  #15
-        """ Return a list stands for is game end ("Playing" or "
-        End_Game")"""
-        return self.client_socket.recv()
+        """ Return a list stands for is game end ("Playing" or "End_Game")
+        """
+        return pickle.loads(self.socket.recv(BUFSIZE))
+    '''
 
 
     def receive_game_status(self):  #15
@@ -102,12 +103,16 @@ class Client():
 
 if __name__ == '__main__':
     input_server_port = input('Enter Server Port(just press enter for using default port 62345): ')
-    input_server_ip = input('Enter 1 for remote server(140.112.30.35) / 0 for localhost(127.0.0.1): ')
     server_port = SERVER_DEFAULT_PORT if input_server_port == '' else int(input_server_port)
-    #server_ip = SERVER_IP if input_server_ip == "1" else LOCALLOST_IP
-    if input_server_ip == "1": server_ip = SERVER_IP
-    elif input_server_ip == "0": server_ip =LOCALLOST_IP
-    else: server_ip = input_server_ip
+    
+    input_server_ip = input('Enter 1 for remote server(140.112.30.35) / 0 for localhost(127.0.0.1) / Just enter IP: ')
+    if input_server_ip == "1":
+        server_ip = SERVER_IP
+    elif input_server_ip == "0":
+        server_ip = LOCALLOST_IP
+    else:
+        server_ip = input_server_ip
+
     player = Client(server_port, server_ip)
 
     pygame.init()
@@ -116,6 +121,7 @@ if __name__ == '__main__':
     
     if player.connect_client_to_server():      
         while True:
+            have_sent_move = False
             print(1)
             player.receive_board()
             print(2)
@@ -134,8 +140,11 @@ if __name__ == '__main__':
                     player_move = player.player_make_move(x, y)
                     if player_move:
                         print(6)
+                        have_sent_move = True
                         player.send_move_to_server(player_move)
+            
             print(7)
-            """if player.receive_game_status() == "End_Game":
-                break"""
+            if have_sent_move:
+                if player.receive_game_status() == "End_Game":
+                    break
 

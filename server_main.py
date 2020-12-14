@@ -32,8 +32,9 @@ class Server():
             l_s.listen()
             c_s, addr = l_s.accept()
             self.user_list.append(User(c_s, addr))
-            self.user_list[1].socket.sendall(pickle.dumps(int(1)))
             print("2 Connected", addr)
+            self.user_list[1].socket.sendall(pickle.dumps(int(1)))
+            print("2 Color Assigned")
 
 
     def send_board_to_client(self):  # 15
