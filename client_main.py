@@ -7,16 +7,18 @@ from game_objects import Board, Move
 from gaming_UI import GamingUI
 
 SERVER_IP = "140.112.30.35"
+LOCALLOST_IP = "127.0.0.1"
 SERVER_DEFAULT_PORT = 62345
 BUFSIZE = 32768
 
 class Client():
-    def __init__(self, server_port):
+    def __init__(self, server_port, server_ip):
         self.board = None
         # TODO need gaming UI to receive move from user
         self.ui = GamingUI()
         self.socket = None
         self.server_port = server_port
+        self.server_ip = server_ip
         self.color = None
 
 
@@ -31,7 +33,7 @@ class Client():
             return False
         
         try:
-            self.socket.connect((SERVER_IP, self.server_port))
+            self.socket.connect((self.server_ip, self.server_port))
             color = pickle.loads(self.socket.recv(BUFSIZE))
             self.color = color
             print("Connected")
@@ -100,16 +102,16 @@ class Client():
 
 if __name__ == '__main__':
     input_server_port = input('Enter Server Port(just press enter for using default port 62345): ')
+    input_server_ip = input('Enter 1 for remote server(140.112.30.35) / 0 for localhost(127.0.0.1): ')
     server_port = SERVER_DEFAULT_PORT if input_server_port == '' else int(input_server_port)
-    player = Client(server_port)
+    server_ip = SERVER_IP if input_server_ip == 1 else LOCALLOST_IP
+    player = Client(server_port, server_ip)
 
     pygame.init()
     pygame.display.set_caption('Dinosaur Game')
     screen = pygame.display.set_mode((800, 800))
     
-    if player.connect_client_to_server():
-        player.receive_board()
-        player.ui.draw_board()       
+    if player.connect_client_to_server():      
         while True:
             player.receive_board()
             player.ui.draw_board(player.board)     
@@ -121,11 +123,9 @@ if __name__ == '__main__':
                     pos = pygame.mouse.get_pos()
                     x, y = player.ui.mouse_click(pos)
                     player_move = player.player_make_move(x, y)
-                    if player_make_move:
+                    if player_move:
                         player.send_move_to_server(player_move)
                     
             if player.receive_game_status() == "End_Game":
                 break
 
-# on_event()
-# detect what happened using Pygame
