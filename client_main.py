@@ -3,7 +3,7 @@ import pickle
 import pygame
 from pygame.locals import QUIT
 
-from game_objects import Board
+from game_objects import Board, Move
 from gaming_UI import GamingUI
 
 SERVER_IP = "140.112.30.35"
@@ -17,6 +17,7 @@ class Client():
         self.ui = GamingUI()
         self.socket = None
         self.server_port = server_port
+        self.color = None
 
 
     def connect_client_to_server(self):  # 20
@@ -31,6 +32,8 @@ class Client():
         
         try:
             self.socket.connect((SERVER_IP, self.server_port))
+            color = pickle.loads(self.socket.recv(BUFSIZE))
+            self.color = color
             print("Connected")
         except:
             print("Connection error")
@@ -39,15 +42,15 @@ class Client():
         return True
 
 
-    def player_make_move(self):
+    def player_make_move(self, x, y):
         """ waiting for user input until getting a valid input and update the client board
         """
-
-        while True:
-            move = self.gaming_interface.make_move()
-            if self.check_if_valid_on_user_board(move):
-                # update board
-                return move
+        move = Move(self.color, x, y)
+        if self.check_if_valid_on_user_board(move):
+            # update board
+            return move
+        else:
+            return False
 
 
     def receive_board(self):  # 15 (Use "module pickle"--binary)
@@ -111,9 +114,14 @@ if __name__ == '__main__':
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
-                # TODO: add other event (check mouse click)
-            player_move = player.player_make_move()
-            player.send_move_to_server(player_move)
+
+                if event.type == pygame.MOUSEBUTTONUP:
+                    pos = pygame.mouse.get_pos()
+                    x, y = player.ui.mouse_click(pos)
+                    player_move = player.player_make_move(x, y)
+                    if player_make_move:
+                        player.send_move_to_server(player_move)
+                    
             if player.receive_game_status() == "End_Game":
                 break
 
