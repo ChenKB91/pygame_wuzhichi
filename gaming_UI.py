@@ -8,10 +8,10 @@ class GamingUI():
         pygame.display.set_caption('五子棋')
         Raw_BoardImg = pygame.image.load('./images/board_img.png')
         self.B_img = pygame.image.load('./images/black.png')
-        self.B_img = pygame.image.scale(self.B_img, (40,40))        
+        self.B_img = pygame.transform.scale(self.B_img, (40,40))        
         self.W_img = pygame.image.load('./images/white.png')
-        self.W_img = pygame.image.load('./images/white.png')
-        
+        self.W_img = pygame.transform.scale(self.W_img, (40,40))        
+
         self.boardImg = pygame.transform.scale(Raw_BoardImg, (600, 600))
         self.surface.blit(boardImg, (0,0))
 
