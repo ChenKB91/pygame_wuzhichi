@@ -25,13 +25,13 @@ class Server():
             l_s.listen()
             c_s, addr = l_s.accept()
             self.user_list.append(User(c_s, addr))
-            user_list[0].socket.sendall(pickle.dumps(int(-1)))
+            self.user_list[0].socket.sendall(pickle.dumps(int(-1)))
             print("1 Connected", addr)
 
             l_s.listen()
             c_s, addr = l_s.accept()
             self.user_list.append(User(c_s, addr))
-            user_list[1].socket.sendall(pickle.dumps(int(1)))
+            self.user_list[1].socket.sendall(pickle.dumps(int(1)))
             print("2 Connected", addr)
 
 
