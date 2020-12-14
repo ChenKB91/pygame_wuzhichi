@@ -19,13 +19,13 @@ class GamingUI():
 
 
     def draw_board(self, board):  # 100
-        self.surface.blit(boardImg, self.board_origin)        
+        self.surface.blit(self.boardImg, self.board_origin)        
         for i in range(15):
             for j in range(15):
                 if board.get_board()[i][j] == 1:
-                    self.surface.blit(B_img, (180+40*i, 180+40*j))
+                    self.surface.blit(self.B_img, (180+40*i, 180+40*j))
                 elif board.get_board()[i][j] == -1:
-                    self.surface.blit(W_img, (180+40*i, 180+40*j))
+                    self.surface.blit(self.W_img, (180+40*i, 180+40*j))
         pygame.display.update()
 
 
