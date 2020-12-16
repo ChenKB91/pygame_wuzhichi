@@ -9,16 +9,23 @@ class GamingUI():
         pygame.display.set_caption('五子棋')
         Raw_BoardImg = pygame.image.load('./images/board_img.png')
         self.B_img = pygame.image.load('./images/black.png')
-        self.B_img = pygame.transform.scale(self.B_img, (40,40))        
+        self.B_img = pygame.transform.scale(self.B_img, (45,45))        
         self.W_img = pygame.image.load('./images/white.png')
-        self.W_img = pygame.transform.scale(self.W_img, (40,40))        
+        self.W_img = pygame.transform.scale(self.W_img, (45,45))        
         self.boardImg = pygame.transform.scale(Raw_BoardImg, (630, 630)) #實際上是14個間隔 一格改成45 pix
         self.board_origin = (100,100)
         self.surface.fill((255,255,255))
 
 
     def draw_board(self, board):  # 100
-        self.surface.blit(self.boardImg, self.board_origin)        
+        self.surface.blit(self.boardImg, self.board_origin)
+        '''
+        This is for cool gray stuff 
+        maybe it should go to somewhere
+        (i,j) = pygame.mouse.get_pos()
+        i,j=int(round((i-100)/45)),int(round((j-100)/45))
+        pygame.draw.rect(game1.surface, (150, 150, 150),[100+45*i-35/2, 100+45*j-35/2, 45, 45],0)
+        '''       
         for i in range(15):
             for j in range(15):
                 if board.get_board()[i][j] == -1:
@@ -65,6 +72,7 @@ if __name__ == '__main__':
     counter=0
     #Gray_Potential=pygame.Rect(100+45*i-35/2, 100+45*j-35/2, width, height)
     while True:
+        game1.surface.fill((255,255,255))
         game1.draw_board(empty_board)
         for event in pygame.event.get():
                 print(event)
