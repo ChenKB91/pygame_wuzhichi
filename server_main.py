@@ -99,13 +99,15 @@ if __name__ == '__main__':
     server.receive_user_connection()
     while True:
         for user in server.user_list:
-            print(1)
+            #print(1)
             server.send_board_to_client()
-            print(2)
+            #print(2)
             move = server.recieve_move_from_client(user)
-            print(3)
+            #print(3)
             server.make_move(move)
             server.check_if_the_game_end(move)
+            #print(4)
             server.send_game_status()
+            #print(5)
             if server.game_status == "End_Game":
                 break

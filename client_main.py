@@ -119,35 +119,38 @@ if __name__ == '__main__':
     pygame.display.set_caption('Dinosaur Game')
     screen = pygame.display.set_mode((800, 800))
     
-    if player.connect_client_to_server():      
+    if player.connect_client_to_server():
+        cnt = 0      
         while True:
+            cnt += 1
             have_sent_move = False
             print(1)
             player.receive_board()
             print(2)
             player.ui.draw_board(player.board) 
 
-            flag = True
-            while flag:
-                for event in pygame.event.get():
-                    print(event)
-                    if event.type == QUIT:
-                        pygame.quit()
-                        flag = False
-                        
-
-                    if event.type == pygame.MOUSEBUTTONUP:
-                        print(3)
-                        pos = pygame.mouse.get_pos()
-                        print(4)
-                        x, y = player.ui.mouse_click(pos)
-                        print(5)
-                        player_move = player.player_make_move(x, y)
-                        if player_move:
-                            print(6)
-                            have_sent_move = True
-                            player.send_move_to_server(player_move)
+            if 2*(cnt%2)-1 == player.color:
+                flag = True
+                while flag:
+                    for event in pygame.event.get():
+                        #print(event)
+                        if event.type == QUIT:
+                            pygame.quit()
                             flag = False
+                            
+
+                        if event.type == pygame.MOUSEBUTTONUP:
+                            print(3)
+                            pos = pygame.mouse.get_pos()
+                            print(4)
+                            x, y = player.ui.mouse_click(pos)
+                            print(5)
+                            player_move = player.player_make_move(x, y)
+                            if player_move:
+                                print(6)
+                                have_sent_move = True
+                                player.send_move_to_server(player_move)
+                                flag = False
                         
             
             print(7)
