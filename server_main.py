@@ -16,7 +16,8 @@ class Server():
     def receive_user_connection(self):  # 20
         """ bind, accept, listen, ...
             And update user_list"""
-        self.host = socket.gethostbyname(socket.gethostname())
+        self.host = "127.0.0.1"
+        # socket.gethostbyname(socket.gethostname())
         print("Host: ", self.host)
         # 這是ptt的sample code，但要處理2個clients好像要別的方法，待修改（已修改完成）
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as l_s:
