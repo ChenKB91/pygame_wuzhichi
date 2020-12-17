@@ -119,17 +119,17 @@ if __name__ == '__main__':
     pygame.display.set_caption('WuZhiChi Game')
     screen = pygame.display.set_mode((800, 800))
     
+    current_player = [-1,1]
     if player.connect_client_to_server():
         cnt = 0      
         while True:
-            cnt += 1
             #have_sent_move = False
             print(1)
             player.receive_board()
             print(2)
             player.ui.draw_board(player.board) 
 
-            if 2*(cnt%2)-1 == player.color:
+            if current_player[cnt%2] == player.color:
                 flag = True
                 while flag:
                     for event in pygame.event.get():
@@ -156,4 +156,5 @@ if __name__ == '__main__':
             print(7)
             if player.receive_game_status() == "End_Game":
                     break
+            cnt += 1
 
