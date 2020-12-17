@@ -129,6 +129,8 @@ if __name__ == '__main__':
 
             flag = True
             while flag:
+                player.ui.draw_board(player.board)
+                player.ui.draw_gray_dot()
                 for event in pygame.event.get():
                     print(event)
                     if event.type == QUIT:

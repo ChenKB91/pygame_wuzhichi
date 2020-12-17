@@ -17,25 +17,33 @@ class GamingUI():
         self.surface.fill((255,255,255))
 
 
+
     def draw_board(self, board):  # 100
+        self.surface.fill((255,255,255))
         self.surface.blit(self.boardImg, self.board_origin)
-        '''
-        This is for cool gray stuff 
-        maybe it should go to somewhere
-        '''
-        (i,j) = pygame.mouse.get_pos()
-        i,j=int(round((i-100)/45)),int(round((j-100)/45))
-        if i>-1 and j>-1 and i<16 and j<16:
-            pygame.draw.circle(game1.surface, (175, 175, 175),[100+45*i, 100+45*j],45/2,0)
-              
         for i in range(15):
             for j in range(15):
                 if board.get_board()[i][j] == -1:
                     self.surface.blit(self.B_img, (100+45*i-35/2-4, 100+45*j-35/2-4))# 35/2那個是修正棋子的圖片偏移 定中心為(0,0)
                 elif board.get_board()[i][j] == 1:
                     self.surface.blit(self.W_img, (100+45*i-35/2-4, 100+45*j-35/2-4))
+        
         pygame.display.update()
 
+    def draw_gray_dot(self):
+
+        '''
+        This is for cool gray stuff 
+        maybe it should go to somewhere
+        '''
+        (i,j) = pygame.mouse.get_pos()
+        x,y=int(round((i-100)/45)),int(round((j-100)/45))
+        if x < 0: x = 0
+        elif x > 14: x=14
+        if y < 0: y = 0
+        elif y > 14: y=14
+        pygame.draw.circle(self.surface, (175, 175, 175),[100+45*x, 100+45*y],45/2,0)
+        pygame.display.update()
 
     def mouse_click(self, coordinate):  # 100
         # converts pixel coordinate to board coordinate.
@@ -43,16 +51,15 @@ class GamingUI():
         x = int(round((coordinate[0]-100)/45))
         y = int(round((coordinate[1]-100)/45))
         if x < 0: x = 0
-        elif x > 15: x=15
+        elif x > 14: x=14
         if y < 0: y = 0
-        elif y > 15: y=15
+        elif y > 14: y=14
         print(x,y)
         return x, y
 
 
 if __name__ == '__main__':
     empty_board=Board()
-    
     game1 = GamingUI()
     '''
     while True:
