@@ -116,14 +116,14 @@ if __name__ == '__main__':
     player = Client(server_port, server_ip)
 
     pygame.init()
-    pygame.display.set_caption('Dinosaur Game')
+    pygame.display.set_caption('WU Zhi Chi')
     screen = pygame.display.set_mode((800, 800))
     
     if player.connect_client_to_server():
         cnt = 0      
         while True:
             cnt += 1
-            have_sent_move = False
+            #have_sent_move = False
             print(1)
             player.receive_board()
             print(2)
@@ -154,7 +154,6 @@ if __name__ == '__main__':
                         
             
             print(7)
-            if have_sent_move:
-                if player.receive_game_status() == "End_Game":
+            if player.receive_game_status() == "End_Game":
                     break
 
