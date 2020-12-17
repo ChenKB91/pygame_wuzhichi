@@ -56,11 +56,12 @@ class Server():
         """ Check if there's 5 connected pieces, 
             and update game status """
         move_color = move.get_value()[0]
-        pi = (move.get_value()[1:])  # initial point(x, y)
+        pi = (move.get_value()[2:0:-1])  # initial point(x, y)
         dx = [1, 1, 0, -1, -1, -1, 0, 1]  # 從右邊逆時針繞一圈
         dy = [0, -1, -1, -1, 0, 1, 1, 1]
         chess_count = [0] * 8
         board = self.board.get_board()
+        print("pi", pi)
 
         NoChessFound = 99
 
@@ -98,14 +99,20 @@ class Server():
 if __name__ == '__main__':
     server = Server()
     server.receive_user_connection()
+    moves_history = []
     while True:
         for user in server.user_list:
             #print(1)
             server.send_board_to_client()
-            print(2)
+            # print(2)
             move = server.receive_move_from_client(user)
-            print(3)
+            moves_history.append(move)
+            # print(3)
             server.make_move(move)
+            b = server.board.get_board()
+            for bb in b:
+                print(bb)
+            print("Move:", move.get_value())
             server.check_if_the_game_end(move)
             #print(4)
             server.send_game_status()
