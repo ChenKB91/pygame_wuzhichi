@@ -16,8 +16,7 @@ class Server():
     def receive_user_connection(self):  # 20
         """ bind, accept, listen, ...
             And update user_list"""
-        self.host = "127.0.0.1"
-        # socket.gethostbyname(socket.gethostname())
+        self.host = socket.gethostbyname(socket.gethostname())
         print("Host: ", self.host)
         # 這是ptt的sample code，但要處理2個clients好像要別的方法，待修改（已修改完成）
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as l_s:
@@ -61,7 +60,6 @@ class Server():
         dy = [0, -1, -1, -1, 0, 1, 1, 1]
         chess_count = [0] * 8
         board = self.board.get_board()
-        print("pi", pi)
 
         NoChessFound = 99
 
@@ -109,10 +107,6 @@ if __name__ == '__main__':
             moves_history.append(move)
             # print(3)
             server.make_move(move)
-            b = server.board.get_board()
-            for bb in b:
-                print(bb)
-            print("Move:", move.get_value())
             server.check_if_the_game_end(move)
             #print(4)
             server.send_game_status()
