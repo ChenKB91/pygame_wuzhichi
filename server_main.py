@@ -42,7 +42,7 @@ class Server():
         for user in self.user_list:
             user.socket.sendall(pickle.dumps(self.board))
 
-    def recieve_move_from_client(self, user):  # 15
+    def receive_move_from_client(self, user):  # 15
         # receives baord from the specified user
         data = user.socket.recv(BUFSIZE)
         while data == None: data = user.socket.recv(BUFSIZE)
@@ -101,9 +101,9 @@ if __name__ == '__main__':
         for user in server.user_list:
             #print(1)
             server.send_board_to_client()
-            #print(2)
-            move = server.recieve_move_from_client(user)
-            #print(3)
+            print(2)
+            move = server.receive_move_from_client(user)
+            print(3)
             server.make_move(move)
             server.check_if_the_game_end(move)
             #print(4)

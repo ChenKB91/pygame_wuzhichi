@@ -22,16 +22,18 @@ class GamingUI():
         '''
         This is for cool gray stuff 
         maybe it should go to somewhere
+        '''
         (i,j) = pygame.mouse.get_pos()
         i,j=int(round((i-100)/45)),int(round((j-100)/45))
-        pygame.draw.rect(game1.surface, (150, 150, 150),[100+45*i-35/2, 100+45*j-35/2, 45, 45],0)
-        '''       
+        if i>-1 and j>-1 and i<16 and j<16:
+            pygame.draw.circle(game1.surface, (175, 175, 175),[100+45*i, 100+45*j],45/2,0)
+              
         for i in range(15):
             for j in range(15):
                 if board.get_board()[i][j] == -1:
-                    self.surface.blit(self.B_img, (100+45*i-35/2, 100+45*j-35/2))# 35/2那個是修正棋子的圖片偏移 定中心為(0,0)
+                    self.surface.blit(self.B_img, (100+45*i-35/2-4, 100+45*j-35/2-4))# 35/2那個是修正棋子的圖片偏移 定中心為(0,0)
                 elif board.get_board()[i][j] == 1:
-                    self.surface.blit(self.W_img, (100+45*i-35/2, 100+45*j-35/2))
+                    self.surface.blit(self.W_img, (100+45*i-35/2-4, 100+45*j-35/2-4))
         pygame.display.update()
 
 
