@@ -116,7 +116,7 @@ if __name__ == '__main__':
     player = Client(server_port, server_ip)
 
     pygame.init()
-    pygame.display.set_caption('WU Zhi Chi')
+    pygame.display.set_caption('WuZhiChi Game')
     screen = pygame.display.set_mode((800, 800))
     
     if player.connect_client_to_server():
