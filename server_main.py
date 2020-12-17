@@ -59,7 +59,7 @@ class Server():
         dx = [1, 1, 0, -1, -1, -1, 0, 1]  # 從右邊逆時針繞一圈
         dy = [0, -1, -1, -1, 0, 1, 1, 1]
         chess_count = [0] * 8
-        board = self.board.get_value()
+        board = self.board.get_board()
 
         NoChessFound = 99
 
@@ -91,7 +91,7 @@ class Server():
     def send_game_status(self):
         # sends game status to both clients
         for user in self.user_list:
-            user.socket.send(self.game_status)
+            user.socket.send(pickle.dumps(self.game_status))
 
 
 if __name__ == '__main__':
