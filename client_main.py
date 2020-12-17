@@ -129,8 +129,9 @@ if __name__ == '__main__':
             print(2)
             player.ui.draw_board(player.board) 
 
+            flag = True
             if current_player[cnt%2] == player.color:
-                flag = True
+                
                 while flag:
                     for event in pygame.event.get():
                         #print(event)
@@ -151,6 +152,14 @@ if __name__ == '__main__':
                                 have_sent_move = True
                                 player.send_move_to_server(player_move)
                                 flag = False
+            """else:
+                while flag:
+                    for event in pygame.event.get():
+                        #print(event)
+                        if event.type == QUIT:
+                            pygame.quit()
+                            flag = False"""
+                           
                         
             
             print(7)

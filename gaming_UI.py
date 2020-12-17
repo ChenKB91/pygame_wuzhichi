@@ -26,7 +26,7 @@ class GamingUI():
         (i,j) = pygame.mouse.get_pos()
         i,j=int(round((i-100)/45)),int(round((j-100)/45))
         if i>-1 and j>-1 and i<16 and j<16:
-            pygame.draw.circle(game1.surface, (175, 175, 175),[100+45*i, 100+45*j],45/2,0)
+            pass #pygame.draw.circle(game1.surface, (175, 175, 175),[100+45*i, 100+45*j],45/2,0)
               
         for i in range(15):
             for j in range(15):
