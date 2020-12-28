@@ -132,7 +132,7 @@ if __name__ == '__main__':
 
             flag = True
             if current_player[cnt%2] == player.color:
-                
+                pygame.event.clear()
                 while flag:
                     for event in pygame.event.get():
                         #print(event)
